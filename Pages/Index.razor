@@ -1,0 +1,47 @@
+﻿@page "/"
+@using DefaultToolbarItemSample.Data
+@inject OrderService Service;
+
+@if (OrdData.Count > 0)
+{
+    <SfGrid TValue="Orders" DataSource="@OrdData" AllowPaging="true" Toolbar="@(new List<string>() {"Add","Edit","Delete","Update","Cancel"})">
+        <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+        <GridEvents OnActionComplete="ActionCompleteHandler" TValue="Orders"></GridEvents>
+        <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+        <GridColumns>
+            <GridColumn Field=@nameof(Orders.OrderID) HeaderText="Order ID" IsPrimaryKey="true" Width="120"></GridColumn>
+            <GridColumn Field=@nameof(Orders.CustomerID) HeaderText="Customer Name" Width="150"></GridColumn>
+            <GridColumn Field=@nameof(Orders.OrderDate) HeaderText=" Order Date" Format="d" Type="ColumnType.Date" Width="130"></GridColumn>
+            <GridColumn Field=@nameof(Orders.Freight) HeaderText="Freight" Format="C2" Width="120"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+}
+
+@code {
+    
+    public List<Orders> OrdData = new List<Orders>();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        OrdData = await Service.GetOrdersAsync();
+    }
+    public async void ActionCompleteHandler(ActionEventArgs<Orders> Args)
+    {
+        if (Args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            var value = OrdData.Find(X => X.OrderID == Args.Data.OrderID);
+            if (Args.Action == "add")
+            {
+                await Service.InsertOrderAsync(Args.Data);
+            }
+            else
+            {
+                await Service.UpdateOrderAsync(Args.Data.OrderID.ToString(), Args.Data);
+            }
+        }
+        if (Args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
+        {
+            await Service.DeleteOrderAsync(Args.Data.OrderID.ToString());
+        }
+    }
+}
