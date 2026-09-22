@@ -2,7 +2,7 @@
 
 ## Overview
 
-This sample demonstrates how to bind a Syncfusion Blazor DataGrid to data that is loaded asynchronously from a Web API service in a Blazor Server application. The sample also shows how users can perform create, update, and delete operations through the Grid's built-in toolbar commands without implementing custom action buttons. It provides a reference implementation for developers who need asynchronous data access combined with standard Grid editing workflows in a server-side Blazor application.
+This sample demonstrates how to bind a Syncfusion [Blazor DataGrid](https://www.syncfusion.com/blazor-components/blazor-datagrid) to data that is loaded asynchronously from a Web API service in a Blazor Server application. The sample also shows how users can perform create, update, and delete operations through the Grid's built-in toolbar commands without implementing custom action buttons. It provides a reference implementation for developers who need asynchronous data access combined with standard Grid editing workflows in a server-side Blazor application.
 
 ## Key Features
 
